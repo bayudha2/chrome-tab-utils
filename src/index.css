@@ -1,0 +1,45 @@
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  min-width: 250px;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.title-popup-extension {
+  margin-bottom: 8px;
+}
+
+p {
+  margin: 0;
+  padding: 0;
+}
+
+.tg-wrapper {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.tg-chip {
+  padding: 4px 8px;
+  border-radius: 4px;
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 2px;
+}
+
+.tg-sub-chip {
+  font-size: 9px;
+  color: #a0a0a0;
+  text-align: center;
+  padding-top: 2px;
+}
