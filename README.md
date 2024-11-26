@@ -1,8 +1,9 @@
 ## Chrome Extension for Tab Utility
 
-feature(for now):
+### ✨ feature(for now): ✨
 
 to open command use:
+
 ```
 Alt + K
 ```
@@ -18,6 +19,7 @@ Alt + 9: tabg group 9
 ```
 
 - create new tab to the right (and group it to tab group)
+
 ```
 Alt + T
 ```
