@@ -2,8 +2,7 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import { transformColorOpt } from "./helper/color";
 
-// TODO:  add more special char
-const specialCharOpt = ["¡", "™", "£"];
+const specialCharOpt = ["¡", "™", "£", "¢", "∞", "§", "¶", "•", "ª"];
 
 function App() {
   const [tabGroups, setTabGroups] = useState<JSX.Element[]>([]);
@@ -44,16 +43,12 @@ function App() {
           "keydown",
           (e) => {
             if (specialCharOpt.includes(e.key)) {
-              sendResponse({ groupIdx: e.key });
+              sendResponse({ dataKey: e.key });
             }
 
-            // TODO: create new tab for spesific tab group if current tab is inside tab group
-            // or Create shortcut for "New Tab to the Right"
-
-            // if (e.key === "˜") {
-            //   chrome.tabs.create({}, (newTab) => {
-            //   })
-            // }
+            if (e.key === "†") {
+              sendResponse({ newTab: true });
+            }
 
             chrome.extension
               .getViews({ type: "popup" })

@@ -1,7 +1,16 @@
 const groups: number[] = [];
 
-// TODO: add more special char
-const specialCharOpt: { [key: string]: number } = { "¡": 0, "™": 1, "£": 2 };
+const specialCharOpt: { [key: string]: number } = {
+  "¡": 0,
+  "™": 1,
+  "£": 2,
+  "¢": 3,
+  "∞": 4,
+  "§": 5,
+  "¶": 6,
+  "•": 7,
+  ª: 8,
+};
 
 function sortGroupTab() {
   // re-adjust tab group oder by resetting group
@@ -16,6 +25,33 @@ function sortGroupTab() {
     }
 
     groups.push(...tempGroups);
+  });
+}
+
+function collapseTabGroup(char: string) {
+  const selectedGroup = groups[specialCharOpt[char]];
+  if (!selectedGroup) return;
+
+  chrome.tabGroups.get(selectedGroup, (gt) => {
+    chrome.tabGroups.update(gt.id, { collapsed: !gt.collapsed });
+  });
+}
+
+function createNewTabToTheRight() {
+  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+    if (tabs.length === 0) return;
+
+    const currentWindow = tabs[0];
+    const idx = currentWindow.index;
+    chrome.tabs.create(
+      {
+        index: idx === 0 ? 1 : idx + 1,
+      },
+      (tab) => {
+        if (currentWindow.groupId === -1) return;
+        chrome.tabs.group({ tabIds: tab.id, groupId: currentWindow.groupId });
+      },
+    );
   });
 }
 
@@ -39,14 +75,19 @@ chrome.windows.onFocusChanged.addListener(() => {
   sortGroupTab();
 });
 
-chrome.runtime.onMessage.addListener((req, _, sendResp) => {
-  chrome.tabGroups.get(groups[specialCharOpt[req?.dataKey]], (gt) => {
-    chrome.tabGroups.update(gt.id, { collapsed: !gt.collapsed });
-    sendResp("gt updated!");
-  });
+chrome.runtime.onMessage.addListener(
+  (req: { dataKey?: string; newTab?: boolean }) => {
+    if (req?.dataKey) {
+      collapseTabGroup(req.dataKey);
+    }
 
-  return true;
-});
+    if (req?.newTab) {
+      createNewTabToTheRight();
+    }
+
+    return true;
+  },
+);
 
 chrome.commands.onCommand.addListener(async (command) => {
   switch (command) {
@@ -55,16 +96,18 @@ chrome.commands.onCommand.addListener(async (command) => {
       break;
     case "toggle-tab-group":
       await chrome.action.openPopup();
+      sortGroupTab();
 
       chrome.runtime.sendMessage(
         { action: "listen_group" },
-        (response: { groupIdx: string }) => {
-          chrome.tabGroups.get(
-            groups[specialCharOpt[response?.groupIdx]],
-            (gt) => {
-              chrome.tabGroups.update(gt.id, { collapsed: !gt.collapsed });
-            },
-          );
+        (response: { dataKey?: string; newTab?: boolean }) => {
+          if (response?.dataKey) {
+            collapseTabGroup(response.dataKey);
+          }
+
+          if (response?.newTab) {
+            createNewTabToTheRight();
+          }
         },
       );
       break;
