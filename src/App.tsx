@@ -1,72 +1,49 @@
-import { useEffect, useState } from "react";
-import "./App.css";
-import { transformColorOpt } from "./helper/color";
+import { useEffect, useRef, useState } from "react";
 
-const specialCharOpt = ["¡", "™", "£", "¢", "∞", "§", "¶", "•", "ª"];
+import {
+  getNoteData,
+  getTabGroupsFormatted,
+  popupKeydownListener,
+  storeNoteData,
+} from "./helper/popup";
+import "./App.css";
 
 function App() {
   const [tabGroups, setTabGroups] = useState<JSX.Element[]>([]);
+  const inputNoteRef = useRef(null);
 
   useEffect(() => {
-    chrome.tabGroups.query({}, (tgs) => {
-      if (tgs.length > 0) {
-        const format = tgs.map((tg, i) => (
-          <div key={`key-${tg.title}`}>
-            <p
-              style={{
-                backgroundColor: transformColorOpt[tg.color].bg,
-                color: transformColorOpt[tg.color].font,
-              }}
-              className="tg-chip"
-            >
-              {tg.title}
-            </p>
-
-            <p
-              className="tg-sub-chip"
-              style={{
-                borderTop: `1px solid ${transformColorOpt[tg.color].line}`,
-              }}
-            >
-              [Alt + {i + 1}]
-            </p>
-          </div>
-        ));
-
-        setTabGroups(format);
-      }
-    });
-
-    chrome.runtime.onMessage.addListener((req, _, sendResponse) => {
-      if (req.action === "listen_group") {
-        document.addEventListener(
-          "keydown",
-          (e) => {
-            if (specialCharOpt.includes(e.key)) {
-              sendResponse({ dataKey: e.key });
-            }
-
-            if (e.key === "†") {
-              sendResponse({ newTab: true });
-            }
-
-            chrome.extension
-              .getViews({ type: "popup" })
-              .forEach((v) => v.close());
-          },
-          { once: true },
-        );
-      }
-
-      return true;
-    });
+    popupKeydownListener(inputNoteRef);
+    getTabGroupsFormatted(setTabGroups);
+    getNoteData(inputNoteRef);
   }, []);
 
+  const handleEscNote = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === "Escape") {
+      storeNoteData((inputNoteRef.current! as HTMLInputElement).value);
+      e.preventDefault();
+    }
+  };
+
+  // TODO: change bg color according to theme
   return (
     <>
-      <div>
+      <div style={{ padding: "8px" }}>
         <p className="title-popup-extension">Toggle Collapse Group</p>
-        <div className="tg-wrapper">{tabGroups.length > 0 && tabGroups}</div>
+        <div className="tg-wrapper">{tabGroups}</div>
+        <p className="title-popup-extension">
+          Notes <span className="extra-label">(for this website)</span>{" "}
+          <span style={{ fontSize: "9px", color: "#a0a0a0", fontWeight: 400 }}>
+            [n]
+          </span>
+        </p>
+        <div>
+          <textarea
+            onKeyDown={handleEscNote}
+            ref={inputNoteRef}
+            className="input-text-area-notes"
+          />
+        </div>
       </div>
     </>
   );
