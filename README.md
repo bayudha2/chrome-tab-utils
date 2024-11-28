@@ -2,7 +2,7 @@
 
 ### ✨ feature(for now): ✨
 
-to open command use:
+to open command, use:
 
 ```
 Alt + K
@@ -22,4 +22,10 @@ Alt + 9: tabg group 9
 
 ```
 Alt + T
+```
+
+- create note for website (save to exntension)
+
+```
+n: to begin write note
 ```
