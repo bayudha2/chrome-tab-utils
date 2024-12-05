@@ -1,4 +1,5 @@
 import { transformColorOpt } from "./color";
+import { getCurrentTab } from "./tabs";
 
 const specialCharOpt = ["¡", "™", "£", "¢", "∞", "§", "¶", "•", "ª"];
 
@@ -41,6 +42,7 @@ export const getTabGroupsFormatted = (
 
 export const popupKeydownListener = (
   inputTextAreaRef: React.MutableRefObject<null>,
+  setFuzzyFinding: React.Dispatch<React.SetStateAction<boolean>>,
 ) => {
   chrome.runtime.onMessage.addListener((req, _, sendResponse) => {
     if (req.action === "listen_group") {
@@ -61,7 +63,13 @@ export const popupKeydownListener = (
             sendResponse();
           }
 
-          if (e.key !== "n") {
+          if (e.key === "f") {
+            setFuzzyFinding(true);
+            e.preventDefault();
+            sendResponse();
+          }
+
+          if (e.key !== "n" && (e.key as string) !== "f") {
             sendResponse();
             closePopup();
           }
@@ -75,9 +83,8 @@ export const popupKeydownListener = (
 };
 
 export const storeNoteData = async (data: unknown) => {
-  chrome.tabs.query({ active: true, currentWindow: true }, async (tabs) => {
-    const currentTab = tabs[0];
-    const baseUrl = new URL(currentTab.url || "").origin;
+  getCurrentTab(async (tab) => {
+    const baseUrl = new URL(tab.url || "").origin;
 
     if (data || (typeof data === "string" && data !== "")) {
       await chrome.storage.local.set({ [baseUrl]: JSON.stringify(data) });
@@ -92,9 +99,8 @@ export const storeNoteData = async (data: unknown) => {
 };
 
 export const getNoteData = (inputRef: React.MutableRefObject<null>) => {
-  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-    const currentTab = tabs[0];
-    const baseUrl = new URL(currentTab.url || "").origin;
+  getCurrentTab((tab) => {
+    const baseUrl = new URL(tab.url || "").origin;
     chrome.storage.local.get([baseUrl]).then((res) => {
       if (!res) return;
       if (typeof res === "object" && Object.keys(res).length === 0) return;
