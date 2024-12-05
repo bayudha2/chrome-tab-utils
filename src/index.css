@@ -57,10 +57,72 @@ p {
   font-size: 10px;
   resize: none;
   margin: 0px;
-  padding: 0px;
+  padding: 4px;
   display: block;
+  margin-bottom: 8px;
 
   &:focus {
     outline: none;
+  }
+}
+
+.button-fuzzy-find {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  width: 100%;
+  border-radius: 4px;
+  text-align: center;
+  border: none;
+  outline: none;
+  padding: 4px 0;
+  background-color: #4f5158;
+  font-weight: 700;
+  color: #dedede;
+  cursor: pointer;
+}
+
+.input-fuzzy-search {
+  width: 100%;
+  font-size: 12px;
+  padding: 4px;
+  margin: 0px;
+  display: block;
+  border: none;
+  border-radius: 4px;
+  outline: none;
+}
+
+.list-fuzzy-found {
+  margin-top: 4px;
+  border: none;
+  border-radius: 4px;
+  overflow: auto;
+  max-height: 260px;
+}
+
+.list-fuzzy-found::-webkit-scrollbar {
+  display: none;
+}
+
+.item-fuzzy-found {
+  margin: 0;
+  outline: none;
+  border: none;
+  width: 100%;
+  font-size: 12px;
+  background-color: #121212;
+  padding: 6px;
+  cursor: pointer;
+  color: #fff;
+  font-weight: 500;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &:hover {
+    background-color: #333333;
   }
 }
