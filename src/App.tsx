@@ -8,7 +8,6 @@ import {
 } from "./helper/popup";
 import "./App.css";
 import { FuzzyTab } from "./tabs/fuzzy-tab";
-// import { fuzzyFindWord, startFuzzyFind } from "./helper/search";
 
 function App() {
   const [tabGroups, setTabGroups] = useState<JSX.Element[]>([]);
@@ -52,6 +51,7 @@ function App() {
           <div style={{ margin: 0, padding: 0, display: "flex" }}>
             <textarea
               onKeyDown={handleEscNote}
+              data-testid="text-area-note"
               ref={inputNoteRef}
               className="input-text-area-notes"
             />
@@ -59,6 +59,7 @@ function App() {
 
           <button
             onClick={() => setFuzzyFinding(true)}
+            data-testid="btn-start-fuzzy-find"
             type="button"
             className="button-fuzzy-find"
           >

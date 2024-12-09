@@ -75,6 +75,7 @@ export const FuzzyTab = () => {
         <input
           placeholder="search…"
           onKeyDown={handleKeyDown}
+          data-testid="input-fuzzy-search"
           ref={inputFindRef}
           className="input-fuzzy-search"
         />
@@ -93,6 +94,7 @@ export const FuzzyTab = () => {
           <button
             type="button"
             onClick={() => fuzzyFindWord(dataFound[i])}
+            data-testid={`btn-item-fuzzy-${item}`}
             key={`item-${item}`}
             className="item-fuzzy-found"
           >

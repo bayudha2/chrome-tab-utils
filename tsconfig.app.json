@@ -3,6 +3,11 @@
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
     "target": "ES2020",
     "useDefineForClassFields": true,
+    "types": [
+      "jest",
+      "@testing-library/jest-dom",
+      "@types/chrome"
+    ],
     "lib": [
       "ES2020",
       "ES2021.String",
@@ -26,6 +31,7 @@
     "noUncheckedSideEffectImports": true
   },
   "include": [
-    "src"
+    "src/**/*",
+    "jest.setup.ts"
   ]
 }

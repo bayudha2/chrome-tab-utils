@@ -1,4 +1,4 @@
-const groups: number[] = [];
+const groups: number[] = []; // TODO: move var to storage
 
 const specialCharOpt: { [key: string]: number } = {
   "¡": 0,
