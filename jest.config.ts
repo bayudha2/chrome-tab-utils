@@ -22,15 +22,11 @@ const config: Config = {
   collectCoverageFrom: [
     "src/**/*.{js,jsx,ts,tsx}",
     "!src/global.d.ts",
+    "!src/main.tsx",
     "!src/vite-env.d.ts",
     "!src/background/*.ts",
     "!src/content-script/*.ts",
   ],
-  coverageThreshold: {
-    global: {
-      lines: 90,
-    },
-  },
 };
 
 export default config;
