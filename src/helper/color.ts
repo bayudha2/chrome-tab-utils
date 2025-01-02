@@ -1,4 +1,4 @@
-export const transformColorOpt: {
+export const transformDarkColorOpt: {
   [key: string]: { bg: string; font: string; line: string };
 } = {
   red: {
@@ -45,5 +45,55 @@ export const transformColorOpt: {
     bg: "#4a392b",
     font: "#fdad71",
     line: "#9e6e4d",
+  },
+};
+
+export const transformLightColorOpt: {
+  [key: string]: { bg: string; font: string; line: string };
+} = {
+  red: {
+    bg: "#e3c8ca",
+    font: "#d83328",
+    line: "#e27b77",
+  },
+  grey: {
+    bg: "#cfd0d5",
+    font: "#64686e",
+    line: "#94979b",
+  },
+  blue: {
+    bg: "#c6d3e9",
+    font: "#1d73e8",
+    line: "#75a1e8",
+  },
+  yellow: {
+    bg: "#e7dbc4",
+    font: "#f9ac0e",
+    line: "#f3c26c",
+  },
+  green: {
+    bg: "#c5d5cf",
+    font: "#1a8138",
+    line: "#76a87f",
+  },
+  pink: {
+    bg: "#e0c6d9",
+    font: "#d01985",
+    line: "#de6cac",
+  },
+  purple: {
+    bg: "#d8cbeb",
+    font: "#a246f3",
+    line: "#bf85f0",
+  },
+  cyan: {
+    bg: "#c1d4d9",
+    font: "#017b85",
+    line: "#70a5aa",
+  },
+  orange: {
+    bg: "#e6d6d0",
+    font: "#f89347",
+    line: "#f2b285",
   },
 };

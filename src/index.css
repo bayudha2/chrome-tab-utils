@@ -7,7 +7,7 @@
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
   background-color: #242424;
-
+  background-color: light-dark(#e3e2e9, #242424);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -17,6 +17,7 @@
 .title-popup-extension {
   margin-bottom: 8px;
   font-weight: 700;
+  color: light-dark(#373737, #ffffffde);
 }
 
 p {
@@ -41,13 +42,13 @@ p {
 
 .tg-sub-chip {
   font-size: 9px;
-  color: #a0a0a0;
+  color: light-dark(#373737, #ffffffde);
   text-align: center;
   padding-top: 2px;
 }
 
 .extra-label {
-  color: #a0a0a0;
+  color: light-dark(#373737, #ffffffde);
   font-weight: 400;
 }
 
@@ -78,9 +79,9 @@ p {
   border: none;
   outline: none;
   padding: 4px 0;
-  background-color: #4f5158;
+  background-color: light-dark(#fdfdfd, #4f5158);
+  color: light-dark(#494949, #dedede);
   font-weight: 700;
-  color: #dedede;
   cursor: pointer;
 }
 
@@ -93,6 +94,13 @@ p {
   border: none;
   border-radius: 4px;
   outline: none;
+}
+
+.fuzzy-result-label {
+  margin-bottom: 4px;
+  font-weight: 400;
+  font-size: 10px;
+  color: light-dark(#373737, #ffffffde);
 }
 
 .list-fuzzy-found {
@@ -113,16 +121,21 @@ p {
   border: none;
   width: 100%;
   font-size: 12px;
-  background-color: #121212;
+  background-color: light-dark(#fff, #121212);
   padding: 6px;
   cursor: pointer;
-  color: #fff;
+  color: light-dark(#333333, #fff);
   font-weight: 500;
   display: flex;
   justify-content: space-between;
   align-items: center;
 
   &:hover {
-    background-color: #333333;
+    background-color: light-dark(#f0f0f0, #333333);
   }
+}
+
+.item-fuzzy-found-shortcut {
+  color: light-dark(#909090, #ffffffde);
+  font-size: 10px;
 }

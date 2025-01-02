@@ -1,4 +1,4 @@
-import { transformColorOpt } from "./color";
+import { transformDarkColorOpt, transformLightColorOpt } from "./color";
 import { getCurrentTab } from "./tabs";
 
 const specialCharOpt = ["¡", "™", "£", "¢", "∞", "§", "¶", "•", "ª"];
@@ -10,14 +10,18 @@ export const closePopup = () => {
 export const getTabGroupsFormatted = (
   setTabGroups: React.Dispatch<React.SetStateAction<JSX.Element[]>>,
 ) => {
+  const transformOpt = window.matchMedia("(prefers-color-scheme: dark").matches
+    ? transformDarkColorOpt
+    : transformLightColorOpt;
+
   chrome.tabGroups.query({}, (tgs) => {
     if (tgs.length > 0) {
       const format = tgs.map((tg, i) => (
         <div key={`key-${tg.title}`}>
           <p
             style={{
-              backgroundColor: transformColorOpt[tg.color].bg,
-              color: transformColorOpt[tg.color].font,
+              backgroundColor: transformOpt[tg.color].bg,
+              color: transformOpt[tg.color].font,
             }}
             className="tg-chip"
           >
@@ -27,7 +31,7 @@ export const getTabGroupsFormatted = (
           <p
             className="tg-sub-chip"
             style={{
-              borderTop: `1px solid ${transformColorOpt[tg.color].line}`,
+              borderTop: `1px solid ${transformOpt[tg.color].line}`,
             }}
           >
             [Alt + {i + 1}]

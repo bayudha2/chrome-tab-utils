@@ -28,7 +28,6 @@ function App() {
     }
   };
 
-  // TODO: change bg color according to theme
   return (
     <>
       {fuzzyFinding ? (
