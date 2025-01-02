@@ -52,7 +52,7 @@ chrome.runtime.onMessage.addListener(
         .replaceAll("\n", " ")
         .split(" ")
         .forEach((s) => {
-          const editDistance = getEditDistance(req.text, s);
+          const editDistance = getEditDistance(req.text.toLowerCase(), s.toLowerCase());
           if (editDistance > 2) {
             return;
           }

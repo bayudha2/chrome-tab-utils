@@ -81,7 +81,7 @@ export const FuzzyTab = () => {
         />
       </div>
 
-      <p style={{ marginBottom: "4px", fontWeight: "400", fontSize: "10px" }}>
+      <p className="fuzzy-result-label">
         Result:{" "}
         {dataFound.length > 0 ? (
           <span style={{ fontSize: "12px", fontWeight: "700" }}>
@@ -108,7 +108,7 @@ export const FuzzyTab = () => {
               {item}
             </p>
             {i < 10 ? (
-              <span style={{ color: "#a0a0a0", fontSize: "10px" }}>
+              <span className="item-fuzzy-found-shortcut">
                 [Alt+{i + (i === 9 ? -i : 1)}]
               </span>
             ) : null}
