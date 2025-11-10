@@ -3,6 +3,8 @@
   line-height: 1.5;
   font-weight: 400;
   min-width: 250px;
+  max-height: 500px;
+  overflow: hidden;
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
@@ -111,11 +113,17 @@ p {
   max-height: 260px;
 }
 
-.list-fuzzy-found::-webkit-scrollbar {
+.list-fuzzy-found::-webkit-scrollbar,
+.list-tab-found::-webkit-scrollbar {
   display: none;
 }
 
-.item-fuzzy-found {
+.list-tab-found {
+  max-height: 400px;
+  overflow: auto;
+}
+
+.item-found {
   margin: 0;
   outline: none;
   border: none;
@@ -138,4 +146,15 @@ p {
 .item-fuzzy-found-shortcut {
   color: light-dark(#909090, #ffffffde);
   font-size: 10px;
+}
+
+.item-tab-found {
+  text-align: start;
+  text-wrap: nowrap;
+  white-space: nowrap;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  gap: 8px;
 }

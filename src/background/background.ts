@@ -94,6 +94,7 @@ chrome.commands.onCommand.addListener(async (command) => {
     case "re-sort-group-tab":
       sortGroupTab();
       break;
+
     case "toggle-tab-group":
       await chrome.action.openPopup();
       sortGroupTab();

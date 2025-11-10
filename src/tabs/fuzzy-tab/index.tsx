@@ -96,7 +96,7 @@ export const FuzzyTab = () => {
             onClick={() => fuzzyFindWord(dataFound[i])}
             data-testid={`btn-item-fuzzy-${item}`}
             key={`item-${item}`}
-            className="item-fuzzy-found"
+            className="item-found"
           >
             <p
               style={{

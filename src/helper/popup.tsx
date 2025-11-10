@@ -44,41 +44,60 @@ export const getTabGroupsFormatted = (
   });
 };
 
+const notToCloseShortcutOptions = ["n", "f", "/", "t", "o"];
+
+const handleKeydownEvent = (e: KeyboardEvent) => {
+  return (
+    sendResponse: (x?: unknown) => void,
+    inputTextAreaRef: React.MutableRefObject<null>,
+    setSelectedTab: React.Dispatch<React.SetStateAction<number>>,
+  ) => {
+    if (specialCharOpt.includes(e.key)) {
+      sendResponse({ dataKey: e.key });
+    }
+
+    if (e.key === "†") {
+      sendResponse({ newTab: true });
+    }
+
+    if (e.key === "n") {
+      (inputTextAreaRef.current! as HTMLInputElement).focus();
+      e.preventDefault();
+      sendResponse();
+    }
+
+    if (e.key === "f") {
+      setSelectedTab(2);
+      e.preventDefault();
+      sendResponse();
+    }
+
+    if (e.key === "/" || e.key === "t" || e.key === "o") {
+      setSelectedTab(3);
+      e.preventDefault();
+      sendResponse();
+    }
+
+    if (!notToCloseShortcutOptions.includes(e.key)) {
+      sendResponse();
+      closePopup();
+    }
+  };
+};
+
+export const controller = new AbortController();
+
 export const popupKeydownListener = (
   inputTextAreaRef: React.MutableRefObject<null>,
-  setFuzzyFinding: React.Dispatch<React.SetStateAction<boolean>>,
+  setSelectedTab: React.Dispatch<React.SetStateAction<number>>,
 ) => {
   chrome.runtime.onMessage.addListener((req, _, sendResponse) => {
     if (req.action === "listen_group") {
       document.addEventListener(
         "keydown",
-        (e) => {
-          if (specialCharOpt.includes(e.key)) {
-            sendResponse({ dataKey: e.key });
-          }
-
-          if (e.key === "†") {
-            sendResponse({ newTab: true });
-          }
-
-          if (e.key === "n") {
-            (inputTextAreaRef.current! as HTMLInputElement).focus();
-            e.preventDefault();
-            sendResponse();
-          }
-
-          if (e.key === "f") {
-            setFuzzyFinding(true);
-            e.preventDefault();
-            sendResponse();
-          }
-
-          if (e.key !== "n" && (e.key as string) !== "f") {
-            sendResponse();
-            closePopup();
-          }
-        },
-        { once: true },
+        (e) =>
+          handleKeydownEvent(e)(sendResponse, inputTextAreaRef, setSelectedTab),
+        { once: true, signal: controller.signal },
       );
     }
 

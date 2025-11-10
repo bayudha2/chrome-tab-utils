@@ -90,6 +90,7 @@ chrome.runtime.onMessage.addListener(
       if (!found) {
         found = window.find(req?.text, false, false, true);
       }
+
       sendResp();
     }
   },
